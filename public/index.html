@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Research Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/5.1.1/marked.min.js"></script>
+    
+    <!-- ADD THIS LINE -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <span class="icon">🤖</span>
+                    AI Research Assistant
+                </h1>
+                <div class="status-indicator" id="connectionStatus">
+                    <span class="status-dot offline"></span>
+                    <span class="status-text">Connecting...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <input 
+                            type="text" 
+                            id="queryInput" 
+                            placeholder="Enter your research query (e.g., 'Latest developments in AI', 'Climate change impacts 2024')"
+                            class="search-input"
+                        >
+                        <button id="searchBtn" class="search-btn">
+                            <span class="btn-text">Research</span>
+                            <span class="btn-icon">🔍</span>
+                        </button>
+                    </div>
+                    <div class="search-options">
+                        <label class="option">
+                            <input type="checkbox" id="detailedAnalysis" checked>
+                            <span>Detailed Analysis</span>
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" id="includeSources" checked>
+                            <span>Include Sources</span>
+                        </label>
+                        <select id="reportType" class="report-type-select">
+                            <option value="business">Business Report</option>
+                            <option value="academic">Academic Report</option>
+                            <option value="technical">Technical Report</option>
+                            <option value="executive">Executive Summary</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Section -->
+            <section class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <h3>Research Progress</h3>
+                        <button id="cancelBtn" class="cancel-btn">Cancel</button>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-steps">
+                        <div class="step" data-step="initialize">
+                            <div class="step-icon">1</div>
+                            <div class="step-label">Initialize</div>
+                        </div>
+                        <div class="step" data-step="search">
+                            <div class="step-icon">2</div>
+                            <div class="step-label">Search</div>
+                        </div>
+                        <div class="step" data-step="analyze">
+                            <div class="step-icon">3</div>
+                            <div class="step-label">Analyze</div>
+                        </div>
+                        <div class="step" data-step="report">
+                            <div class="step-icon">4</div>
+                            <div class="step-label">Generate Report</div>
+                        </div>
+                    </div>
+                    <div class="progress-message" id="progressMessage">
+                        Initializing research...
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection">
+                <div class="results-container">
+                    <!-- Tabs -->
+                    <div class="tabs-container">
+                        <div class="tabs">
+                            <button class="tab active" data-tab="summary">Summary</button>
+                            <button class="tab" data-tab="report">Full Report</button>
+                            <button class="tab" data-tab="sources">Sources</button>
+                            <button class="tab" data-tab="insights">Key Insights</button>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        <!-- Summary Tab -->
+                        <div class="tab-pane active" data-pane="summary">
+                            <div class="content-header">
+                                <h3>Research Summary</h3>
+                                <div class="content-actions">
+                                    <button class="action-btn" id="copyBtn">📋 Copy</button>
+                                    <button class="action-btn" id="downloadBtn">⬇️ Download</button>
+                                    <button class="action-btn" id="shareBtn">🔗 Share</button>
+                                </div>
+                            </div>
+                            <div class="content-body" id="summaryContent">
+                                <div class="welcome-message">
+                                    <div class="welcome-icon">🎯</div>
+                                    <h3>Welcome to AI Research Assistant</h3>
+                                    <p>Enter a research query above to get started. I'll search, analyze, and create comprehensive reports for you using multiple specialized AI agents.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Report Tab -->
+                        <div class="tab-pane" data-pane="report">
+                            <div class="content-header">
+                                <h3>Full Research Report</h3>
+                                <div class="format-selector">
+                                    <select id="formatSelect">
+                                        <option value="markdown">Markdown</option>
+                                        <option value="html">HTML</option>
+                                        <option value="plain">Plain Text</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="content-body" id="reportContent">
+                                <p class="placeholder">Full research report will appear here after analysis is complete.</p>
+                            </div>
+                        </div>
+
+                        <!-- Sources Tab -->
+                        <div class="tab-pane" data-pane="sources">
+                            <div class="content-header">
+                                <h3>Research Sources</h3>
+                                <div class="source-stats" id="sourceStats">
+                                    <span class="stat">Sources: 0</span>
+                                    <span class="stat">Reliability: N/A</span>
+                                </div>
+                            </div>
+                            <div class="content-body" id="sourcesContent">
+                                <p class="placeholder">Research sources will be listed here after the search is complete.</p>
+                            </div>
+                        </div>
+
+                        <!-- Insights Tab -->
+                        <div class="tab-pane" data-pane="insights">
+                            <div class="content-header">
+                                <h3>Key Insights</h3>
+                                <div class="insights-filter">
+                                    <select id="insightsFilter">
+                                        <option value="all">All Insights</option>
+                                        <option value="trends">Trends</option>
+                                        <option value="opportunities">Opportunities</option>
+                                        <option value="challenges">Challenges</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="content-body" id="insightsContent">
+                                <p class="placeholder">Key insights and analysis will be displayed here.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <!-- Agent Status -->
+                <div class="widget">
+                    <h4>Agent Status</h4>
+                    <div class="agent-list" id="agentList">
+                        <div class="agent-item">
+                            <span class="agent-name">Research Orchestrator</span>
+                            <span class="agent-status unknown">●</span>
+                        </div>
+                        <div class="agent-item">
+                            <span class="agent-name">Search Agent</span>
+                            <span class="agent-status unknown">●</span>
+                        </div>
+                        <div class="agent-item">
+                            <span class="agent-name">Summarizer Agent</span>
+                            <span class="agent-status unknown">●</span>
+                        </div>
+                        <div class="agent-item">
+                            <span class="agent-name">Report Writer</span>
+                            <span class="agent-status unknown">●</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Info -->
+                <div class="widget">
+                    <h4>System Info</h4>
+                    <div class="system-info" id="systemInfo">
+                        <div class="info-item">
+                            <span class="info-label">Backend:</span>
+                            <span class="info-value" id="backendStatus">Checking...</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">MCP Protocol:</span>
+                            <span class="info-value">v1.0.0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">AI Model:</span>
+                            <span class="info-value">Gemini 1.5 Flash</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Processing your request...</p>
+        </div>
+    </div>
+
+    <!-- Error Toast -->
+    <div class="toast error" id="errorToast" style="display: none;">
+        <div class="toast-content">
+            <span class="toast-icon">⚠️</span>
+            <span class="toast-message" id="errorMessage"></span>
+            <button class="toast-close" onclick="hideToast('errorToast')">×</button>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast success" id="successToast" style="display: none;">
+        <div class="toast-content">
+            <span class="toast-icon">✅</span>
+            <span class="toast-message" id="successMessage"></span>
+            <button class="toast-close" onclick="hideToast('successToast')">×</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
