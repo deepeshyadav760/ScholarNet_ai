@@ -298,7 +298,7 @@ if __name__ == "__main__":
         # Run the application using the socket_app wrapper
         uvicorn.run(
             "main:socket_app", # <--- IMPORTANT: RUN socket_app, NOT app
-            host="localhost",
+            host="0.0.0.0",
             port=Config.MCP_SERVER_PORT,
             log_level=Config.LOG_LEVEL.lower(),
             reload=True
