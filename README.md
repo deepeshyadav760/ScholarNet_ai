@@ -63,7 +63,8 @@ Think of it as a **digital assembly line** for research.
                                                              |     (Uses LLM)            |
                                                              +---------------------------+
 
----
+
+```
 ## 🛠️ Tech Stack
 
 **Backend**  
