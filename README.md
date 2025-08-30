@@ -95,17 +95,18 @@ cd ai-research-assistant
 
 ```
 ### 3. Set Up the Python Environment
-# bash
+```bash
 # Create a virtual environment
 python -m venv ai_agents_env
 
 # Activate it
-# On Windows:
+### On Windows:
 ai_agents_env\Scripts\activate
-# On macOS/Linux:
+### On macOS/Linux:
 source ai_agents_env/bin/activate
 
 
+```
 ### 5. Configure Your API Keys
 
 Create a file named **`.env`** in the root directory of the project and add the following:
