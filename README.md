@@ -61,9 +61,9 @@ Think of it as a **digital assembly line** for research.
                                      |                       +-------------v-------------+
                                      +-----------------------|     ReportWriterAgent     |
                                                              |     (Uses LLM)            |
-                                                             +---------------------------+```
+                                                             +---------------------------+
 
-## 🛠️ Tech Stack
+```## 🛠️ Tech Stack
 
 **Backend**  
 - Framework: Python, FastAPI  
