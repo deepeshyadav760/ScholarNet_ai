@@ -81,7 +81,6 @@ Think of it as a **digital assembly line** for research.
 - Real-Time Communication: socket.io-client  
 - Markdown Rendering: marked.js  
 
----
 
 ## 🚀 Getting Started
 
@@ -94,8 +93,9 @@ Think of it as a **digital assembly line** for research.
 git clone https://github.com/your-username/ai-research-assistant.git
 cd ai-research-assistant
 
+```
 ### 3. Set Up the Python Environment
-```bash
+# bash
 # Create a virtual environment
 python -m venv ai_agents_env
 
@@ -105,11 +105,10 @@ ai_agents_env\Scripts\activate
 # On macOS/Linux:
 source ai_agents_env/bin/activate
 
+
 ### 5. Configure Your API Keys
 
 Create a file named **`.env`** in the root directory of the project and add the following:
-
-```env
 # Google AI API Key for Gemini
 GEMINI_API_KEY="AIzaSy...YOUR_GEMINI_API_KEY"
 
@@ -118,7 +117,6 @@ GOOGLE_API_KEY="AIzaSy...YOUR_GOOGLE_CLOUD_API_KEY"
 SEARCH_ENGINE_ID="YOUR_SEARCH_ENGINE_ID"
 
 ### 6. Run the Application
-```bash
 python main.py
 
 You should see:
