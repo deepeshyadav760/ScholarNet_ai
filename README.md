@@ -61,7 +61,7 @@ Think of it as a **digital assembly line** for research.
                                      |                       +-------------v-------------+
                                      +-----------------------|     ReportWriterAgent     |
                                                              |     (Uses LLM)            |
-                                                             +---------------------------+
+                                                             +---------------------------+```
 
 ## 🛠️ Tech Stack
 
@@ -129,5 +129,4 @@ Open your browser and go to:
 👉 **http://localhost:8000**
 
 The AI Research Assistant interface should load and connect. You’re ready to start your research!
-
 
