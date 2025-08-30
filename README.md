@@ -126,7 +126,7 @@ You should see:
 Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
 ```
 
-### 7. Open the Assistant
+### 6. Open the Assistant
 Open your browser and go to:  
 👉 **http://localhost:8000**
 
