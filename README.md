@@ -107,7 +107,7 @@ source ai_agents_env/bin/activate
 
 
 ```
-### 5. Configure Your API Keys
+### 4. Configure Your API Keys
 
 Create a file named **`.env`** in the root directory of the project and add the following:
 # Google AI API Key for Gemini
@@ -116,14 +116,16 @@ GEMINI_API_KEY="AIzaSy...YOUR_GEMINI_API_KEY"
 # Google Custom Search API Keys
 GOOGLE_API_KEY="AIzaSy...YOUR_GOOGLE_CLOUD_API_KEY"
 SEARCH_ENGINE_ID="YOUR_SEARCH_ENGINE_ID"
+```
 
-### 6. Run the Application
+```
+### 5. Run the Application
 python main.py
 
 You should see:
-
 Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
-
+```
+```
 ### 7. Open the Assistant
 
 Open your browser and go to:  
