@@ -1,85 +1,133 @@
 # AI Research Assistant with MCP Protocol
 
-A sophisticated multi-agent AI research system that uses the Model Context Protocol (MCP) for seamless communication between specialized agents, powered by Google Gemini API.
+A sophisticated, web-based application that automates the entire research process using a **multi-agent system** powered by **Google's Gemini LLM**.  
+The assistant takes a single research query, dynamically creates a research plan, browses the web for real-time information, synthesizes the findings, and generates a comprehensive, structured report.
 
-## Features
+<img width="1911" height="916" alt="image" src="https://github.com/user-attachments/assets/91a952da-893d-4801-8490-7713d9ec5397" />
+---
 
-- **Multi-Agent Architecture**: Specialized agents for different research tasks
-- **MCP Protocol**: Standardized communication between agents
-- **Google Gemini Integration**: Free and powerful AI capabilities
-- **Web Interface**: Modern React-based frontend
-- **Real-time Communication**: WebSocket support for live updates
-- **Vector Storage**: Efficient document storage and retrieval
+## ✨ Features 
 
-## Architecture
+- 🧠 **Multi-Agent Architecture** – Utilizes a team of specialized AI agents (Orchestrator, Search, Summarizer, Report Writer) that collaborate to fulfill complex tasks.  
+- 🌐 **Real-Time Web Search** – Integrates with the Google Search API to gather up-to-the-minute information, ensuring reports are based on the latest data.  
+- 🚀 **Dynamic Research Planning** – The Orchestrator agent uses an LLM to create a custom, multi-step research plan for every unique query.  
+- 📄 **AI-Powered Content Generation** – Leverages the Gemini 1.5 Flash model for both concise summarization of sources and detailed generation of full reports.  
+- 📊 **Interactive Frontend** – A sleek, responsive UI with real-time progress updates, providing full transparency into the research process.  
+- 🎨 **Dual-Theme UI** – Includes a persistent Light/Dark mode toggle for user comfort.  
+- 🕓 **Recent Query History** – Automatically saves your recent queries in the browser for easy access.  
 
-### Agents
-- **Research Orchestrator**: Coordinates research tasks between agents
-- **Search Agent**: Handles web searches and data collection
-- **Summarizer Agent**: Creates concise summaries of research findings
-- **Report Writer**: Generates comprehensive research reports
+---
 
-### MCP Protocol Implementation
-- Standardized message passing between agents
-- Event-driven architecture
-- Error handling and retry mechanisms
-- Resource management and cleanup
+## 🏛️ System Architecture
 
-## Setup
+The application is built on a **modular, multi-agent architecture**, ensuring scalability and maintainability.  
+Think of it as a **digital assembly line** for research.
 
-1. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   npm install
-   ```
+### The Kitchen Analogy
+- **The User** → Customer placing an order  
+- **Research Query** → The order  
+- **AI Agents** → Specialist chefs working together  
+  - **ResearchOrchestrator** → Head Chef (designs the recipe/plan)  
+  - **SearchAgent** → Forager (gathers fresh web sources)  
+  - **SummarizerAgent** → Sauce Chef (distills the raw data)  
+  - **ReportWriterAgent** → Plating Artist (produces the final report)  
+- **MCP Protocol** → The digital ordering system connecting all chefs  
+- **Gemini LLM** → The Master Chef’s Brain powering each agent  
 
-2. **Environment Variables**:
-   Create a `.env` file:
-   ```
-   GEMINI_API_KEY=your_gemini_api_key_here
-   MCP_SERVER_PORT=8000
-   WS_PORT=3001
-   ```
+---
 
-3. **Get Gemini API Key**:
-   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-   - Create a new API key
-   - Add it to your `.env` file
+## ⚙️ Technical Flow
 
-4. **Run the Application**:
-   ```bash
-   # Start Python backend
-   python main.py
-   
-   # Start Node.js frontend server (in another terminal)
-   npm start
-   ```
+```text
++----------------+      +--------------------------+      +---------------------------+
+|                |      |                          |      |   ResearchOrchestrator    |
+|   Frontend UI  |----->|   Backend (FastAPI)      |----->|   (Creates Plan via LLM)  |
+| (Socket.IO)    |<-----|   (MCP Protocol Server)  |<-----|                           |
++----------------+      +--------------------------+      +-------------+-------------+
+                                                                         | (MCP)
+                                                                         |
+                        +---------------------------+      +-------------v-------------+
+                        |                           |      |       SearchAgent         |
+                        |   Google Gemini 1.5 LLM   |<---->|   (Uses Google Search)    |
+                        |       (The "Brain")       |      +-------------+-------------+
+                        |                           |                    | (MCP)
+                        +---------------------------+                    |
+                                     ^                       +-------------v-------------+
+                                     |                       |      SummarizerAgent      |
+                                     +-----------------------|      (Uses LLM)           |
+                                     |                       +-------------+-------------+
+                                     |                                     | (MCP)
+                                     |                                     |
+                                     |                       +-------------v-------------+
+                                     +-----------------------|     ReportWriterAgent     |
+                                                             |     (Uses LLM)            |
+                                                             +---------------------------+
 
-## Usage
+## 🛠️ Tech Stack
 
-1. Open `http://localhost:8000` in your browser
-2. Enter your research query
-3. The system will automatically:
-   - Route your query to appropriate agents
-   - Conduct web searches
-   - Analyze and summarize findings
-   - Generate a comprehensive report
+**Backend**  
+- Framework: Python, FastAPI  
+- Real-Time Communication: python-socketio, Uvicorn  
+- AI & LLM: google-generativeai (Gemini 1.5 Flash)  
+- Web Search: google-api-python-client  
+- HTTP Requests: aiohttp  
 
-## MCP Protocol Benefits
+**Frontend**  
+- Structure: HTML5  
+- Styling: CSS3  
+- Interactivity: JavaScript  
+- Real-Time Communication: socket.io-client  
+- Markdown Rendering: marked.js  
 
-- **Interoperability**: Agents can communicate regardless of implementation language
-- **Scalability**: Easy to add new agents or scale existing ones
-- **Reliability**: Built-in error handling and message persistence
-- **Security**: Secure message passing with authentication
+---
 
-## Contributing
+## 🚀 Getting Started
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test with multiple agents
-5. Submit a pull request
+### 1. Prerequisites
+- Python 3.9+  
+- A Google Cloud account for API keys  
 
-## License
+### 2. Clone the Repository
+```bash
+git clone https://github.com/your-username/ai-research-assistant.git
+cd ai-research-assistant
 
-MIT License - see LICENSE file for details# ScholarNet_ai
+### 3. Set Up the Python Environment
+```bash
+# Create a virtual environment
+python -m venv ai_agents_env
+
+# Activate it
+# On Windows:
+ai_agents_env\Scripts\activate
+# On macOS/Linux:
+source ai_agents_env/bin/activate
+
+### 5. Configure Your API Keys
+
+Create a file named **`.env`** in the root directory of the project and add the following:
+
+```env
+# Google AI API Key for Gemini
+GEMINI_API_KEY="AIzaSy...YOUR_GEMINI_API_KEY"
+
+# Google Custom Search API Keys
+GOOGLE_API_KEY="AIzaSy...YOUR_GOOGLE_CLOUD_API_KEY"
+SEARCH_ENGINE_ID="YOUR_SEARCH_ENGINE_ID"
+
+### 6. Run the Application
+```bash
+python main.py
+
+You should see:
+
+Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
+
+### 7. Open the Assistant
+
+Open your browser and go to:  
+👉 **http://localhost:8000**
+
+The AI Research Assistant interface should load and connect. You’re ready to start your research!
+
+
