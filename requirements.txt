@@ -9,8 +9,10 @@ pydantic==2.5.0
 python-dotenv==1.0.0
 beautifulsoup4==4.12.2
 requests==2.31.0
-numpy==1.26.4  # Or whatever version pip installs
-scikit-learn==1.4.2 # The new version
-scipy==1.13.0 # Or whatever version pip installs for scipy
+numpy==1.26.4
+scikit-learn==1.4.2
+scipy==1.13.0
 mcp==1.0.0
 websockets==12.0
+aiohttp==3.9.1
+python-socketio[asyncio_client]==5.11.1
